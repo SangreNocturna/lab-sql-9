@@ -1,14 +1,29 @@
 USE sakila;
 
 -- 1. How many distinct (different) actors' last names are there?
-SELECT DISTINCT a.first_name, a.last_name
-FROM sakila.film f
-JOIN sakila.film_actor fa
-ON f.film_id = fa.film_id
-JOIN sakila.actor a
-ON fa.actor_id = a.actor_id
-GROUP BY f.title
-ORDER BY count(a.last_name) DESC;
+SELECT DISTINCT count(last_name) FROM sakila.actor;
+
+
+-- 2. Add an additional column day_type with values 'weekend' and 'workday' depending on the rental day of the week.
+SELECT *,  
+CASE
+when weekday(rental_date) < 6 then 'workday' 
+else 'weekend' 
+end as day_type  
+FROM sakila.rental;
+
+
+-- 3. Get all films with ARMAGEDDON in the title.
+SELECT * FROM sakila.film
+WHERE title LIKE '%%ARMAGEDDON%%';
+
+-- 4. Get 10 the longest films.
+SELECT title, length FROM sakila.film
+ORDER BY length DESC
+LIMIT 10; 
+
+-- 5. How many films include Behind the Scenes content?
+
 
 
 -- STILL IN PROGRESS, I NEED TO SLEEP
